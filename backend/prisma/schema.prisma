@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  activities Activity[]
+  scans      Scan[]
+}
+
+model AIConsultant {
+  id          String @id @default(cuid())
+  name        String
+  specialty   String
+  precision   Float
+  avatar      String
+  description String
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  time      String   // Display string e.g. "Just now", "2 hours ago" or use createdAt
+  desc      String
+  type      String   // "system", "user", "ai"
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Scan {
+  id              String   @id @default(cuid())
+  userId          String
+  condition       String
+  severity        Int
+  area            String
+  recommendations String[]
+  createdAt       DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
