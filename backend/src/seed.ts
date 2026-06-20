@@ -22,10 +22,21 @@ async function main() {
     });
   }
 
+  // Create a seed user for activities
+  const user = await prisma.user.upsert({
+    where: { email: 'seed@example.com' },
+    update: {},
+    create: {
+      name: 'Seed User',
+      email: 'seed@example.com',
+    },
+  });
+
   // Seed Activities (from dashboardStats)
   for (const act of dashboardStats.activities) {
     await prisma.activity.create({
       data: {
+        userId: user.id,
         title: act.title,
         time: act.time,
         desc: act.desc,
