@@ -50,7 +50,8 @@ export default function DashboardPage() {
     return <div className="text-center p-8 text-red-500">Failed to load dashboard data. Ensure backend is running.</div>;
   }
 
-  const { scoreData, stats, activities } = dashboardData;
+  const { scoreData, stats, activities, user } = dashboardData;
+  const firstName = user?.name?.split(' ')[0] || 'there';
 
   const renderIcon = (iconName: string) => {
     switch (iconName) {
@@ -65,7 +66,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
-        <h1 className="text-3xl font-bold text-foreground">Welcome back, Sarah</h1>
+        <h1 className="text-3xl font-bold text-foreground">Welcome back, {firstName}</h1>
         <p className="text-foreground/60 mt-1">Here is your daily skin health overview.</p>
       </div>
 

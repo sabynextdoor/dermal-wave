@@ -4,7 +4,8 @@ declare global {
   }
 }
 
-const API_URL = 'https://dermalwave.onrender.com/api';
+// Backend API base URL. Override with NEXT_PUBLIC_API_URL if the API is hosted elsewhere.
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 export const apiFetch = async (endpoint: string, options: RequestInit & { token?: string | null } = {}) => {
   const { token, ...fetchOptions } = options;

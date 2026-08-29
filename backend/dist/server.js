@@ -15,8 +15,21 @@ app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: '10mb' }));
 const genai_1 = require("@google/genai");
 const express_2 = require("@clerk/express");
+// Friendly guard so the API returns a clear message instead of a raw 500
+// when Clerk credentials have not been configured yet.
+const clerkConfigGuard = (_req, res, next) => {
+    if (!process.env.CLERK_SECRET_KEY || !process.env.CLERK_PUBLISHABLE_KEY) {
+        res.status(503).json({
+            error: 'Clerk authentication is not configured.',
+            hint: 'Set CLERK_SECRET_KEY and CLERK_PUBLISHABLE_KEY in backend/.env (see backend/.env.example), then restart the backend.',
+        });
+        return;
+    }
+    next();
+};
 // Middleware to protect routes and sync Clerk user to NeonDB
 const authenticate = [
+    clerkConfigGuard,
     (0, express_2.clerkMiddleware)(),
     async (req, res, next) => {
         const auth = (0, express_2.getAuth)(req);
