@@ -1,3 +1,8 @@
+/**
+ * Dermal Wave — AI skin-analysis backend.
+ * Built by Saby (sabynextdoor) — https://github.com/sabynextdoor
+ * GitHub: https://github.com/sabynextdoor/dermalweave
+ */
 import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
@@ -347,4 +352,5 @@ app.post('/api/chat', authenticate, async (req: Request, res: Response) => {
 
 app.listen(PORT, () => {
   console.log(`Backend server running on http://localhost:${PORT}`);
+  console.log('Dermal Wave — built by Saby (sabynextdoor). github.com/sabynextdoor/dermalweave');
 });

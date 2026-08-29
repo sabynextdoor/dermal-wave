@@ -10,6 +10,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+// Dermal Wave — built by Saby (sabynextdoor), https://github.com/sabynextdoor/dermalweave
+
 export const metadata: Metadata = {
   title: "Dermal Wave | Smart Therapeutic Garments™",
   description: "AI-powered skin care, woven into every thread. Get personalized AI analysis, AI consultants, and smart garments for psoriasis and chronic skin conditions.",

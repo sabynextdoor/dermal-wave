@@ -270,6 +270,7 @@ export default function LandingPage() {
             <span className="text-xl font-bold text-foreground">Dermal Wave™</span>
           </div>
           <p className="text-foreground/50 text-sm font-medium">© 2026 Dermal Wave AI Inference. All rights reserved.</p>
+          <p className="text-foreground/40 text-sm font-medium">Built by <a href="https://github.com/sabynextdoor" target="_blank" rel="noopener noreferrer" className="font-bold text-foreground/70 hover:text-primary-600 transition-colors">Saby</a> (sabynextdoor)</p>
         </div>
       </footer>
     </div>

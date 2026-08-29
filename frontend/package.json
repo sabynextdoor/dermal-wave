@@ -2,6 +2,8 @@
   "name": "dermalweave",
   "version": "0.1.0",
   "private": true,
+  "author": "Saby (sabynextdoor) <sabynextdoor@gmail.com>",
+  "description": "Dermal Wave — AI-powered skin analysis & virtual dermatology. Built by Saby (sabynextdoor).",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

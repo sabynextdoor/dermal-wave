@@ -10,10 +10,10 @@
     "db:seed": "prisma db seed",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": ["dermalwave", "dermalweave", "ai", "dermatology", "skin-analysis", "psoriasis"],
+  "author": "Saby (sabynextdoor) <sabynextdoor@gmail.com>",
+  "license": "MIT",
+  "description": "Dermal Wave backend — Express + Prisma + Gemini AI skin-analysis API. Built by Saby (sabynextdoor).",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },

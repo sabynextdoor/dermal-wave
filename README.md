@@ -279,6 +279,10 @@ Distributed under the [MIT License](LICENSE). See `LICENSE` for more information
 
 ## 🙏 Acknowledgments
 
-Open-source community · Google Gemini · Clerk · Prisma · Next.js. Built with ❤️ for modern healthcare.
+**Created & maintained by [Saby (sabynextdoor)](https://github.com/sabynextdoor)** — this project is my work.
+
+If you use, fork, or build on Dermal Wave, please credit the original author.
+
+Shout-outs to the open-source community: Google Gemini · Clerk · Prisma · Next.js. Built with ❤️ for modern healthcare.
 
 <sub>⚠️ **Medical disclaimer:** Dermal Wave is an experimental AI tool for educational purposes. It is **not** a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider.</sub>
