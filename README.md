@@ -22,9 +22,9 @@ A full-stack, production-grade platform that lets users **upload a skin photo fo
 
 ## 📸 Screenshots
 
-| Landing Page |
-| :---: |
-| ![Dermal Wave Landing Page](screenshots/landing.png) |
+| Landing Page | AI Skin Analysis |
+| :---: | :---: |
+| ![Dermal Wave Landing Page](screenshots/landing.png) | ![AI Skin Analysis](screenshots/analysis.png) |
 
 > Protected pages (AI Analysis, Dashboard, AI Consultant chat) require an authenticated session — capture them after signing in with your own Clerk account.
 
@@ -85,6 +85,15 @@ Before you begin, install:
 4. **A Google Gemini API key** — free at [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey). Keys starting with `AIza...` (legacy) **or** `AQ.Ab...` (new auth keys) are supported.
 
 > ⚠️ The app **will not function** without valid Clerk keys (authentication) and a Gemini key (AI analysis/chat). PostgreSQL is required for all data persistence.
+
+> ## 🔑 Important — bring your own keys
+>
+> This repository does **not** include any working keys. Clerk and Google Gemini are **per-account** credentials that **you must create and own** — they are never committed to this repo, and they cannot be shared or "just work" after cloning.
+>
+> - **Clerk keys** (`pk_test_...` / `sk_test_...`) → create a free application at [dashboard.clerk.com](https://dashboard.clerk.com).
+> - **Gemini key** (`AIza...` or `AQ.Ab...`) → create a free key at [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey).
+>
+> Paste your values into your local `backend/.env` and `frontend/.env.local` (both are gitignored). If authentication or AI analysis fails after cloning, it is because **your** keys are missing or misconfigured — review the Troubleshooting section below.
 
 ---
 
