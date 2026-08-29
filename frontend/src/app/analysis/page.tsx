@@ -29,10 +29,27 @@ export default function AnalysisPage() {
     const reader = new FileReader();
     reader.onload = (e) => {
       const dataUrl = e.target?.result as string;
-      setFile(dataUrl);
-      const base64 = dataUrl.split(',')[1];
-      setImageBase64(base64);
-      setMimeType(selectedFile.type);
+      const img = new window.Image();
+      img.onload = () => {
+        const MAX = 512;
+        let { width, height } = img;
+        if (width > MAX || height > MAX) {
+          const scale = Math.min(MAX / width, MAX / height);
+          width = Math.round(width * scale);
+          height = Math.round(height * scale);
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.drawImage(img, 0, 0, width, height);
+        const jpeg = canvas.toDataURL("image/jpeg", 0.8);
+        setFile(jpeg);
+        setImageBase64(jpeg.split(",")[1]);
+        setMimeType("image/jpeg");
+      };
+      img.src = dataUrl;
     };
     reader.readAsDataURL(selectedFile);
   };
@@ -63,9 +80,20 @@ export default function AnalysisPage() {
       });
       setResults(data);
       setScanComplete(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Analysis failed. Make sure your Gemini API key is configured.");
+      setResults({
+        reportId: "#DW-ERROR",
+        condition: "Analysis could not be completed",
+        severity: 0,
+        area: "Unknown",
+        recommendations: [
+          "Please try again in a moment.",
+          "Make sure you are signed in — this feature requires a login.",
+          err?.message ? `Details: ${err.message}` : undefined,
+        ].filter(Boolean) as string[],
+      });
+      setScanComplete(true);
     } finally {
       setIsScanning(false);
     }

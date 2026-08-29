@@ -1,5 +1,47 @@
+# Dependencies
 node_modules/
+
+# Build output
 .next/
+dist/
+out/
+
+# Next.js
+.next/
+
+# Environment variables (secrets) - NEVER commit
 .env
 .env.local
+.env.*.local
+.env.development
+.env.production
+
+# Clerk CLI local state
+.clerk/
+
+# Logs
+*.log
+*.log.*
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Temp / scratch files
+tmp/
+temp/
+tok.txt
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+.nyc_output/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp

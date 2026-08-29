@@ -14,6 +14,37 @@ app.use(express.json({ limit: '10mb' }));
 import { GoogleGenAI } from '@google/genai';
 import { clerkMiddleware, getAuth, clerkClient } from '@clerk/express';
 
+// Retry Gemini calls that fail temporarily (503 high-demand / 429 quota / 500).
+// Uses exponential backoff so the free tier's occasional rate limits resolve.
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+async function generateWithRetry(
+  ai: GoogleGenAI,
+  request: any,
+  attempts = 5
+): Promise<any> {
+  let lastErr: any;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await ai.models.generateContent(request);
+    } catch (err: any) {
+      lastErr = err;
+      const status =
+        err?.status ??
+        err?.cause?.status ??
+        (err?.message && /(503|429|500)/.test(String(err.message)) ? 'rate' : undefined);
+      if (status === 503 || status === 429 || status === 500 || status === 'rate') {
+        const delay = 1500 * Math.pow(2, i);
+        console.log(`Gemini rate-limited (${status}); retrying in ${delay}ms (${i + 1}/${attempts})`);
+        await sleep(delay);
+        continue;
+      }
+      throw err;
+    }
+  }
+  throw lastErr;
+}
+
 // Friendly guard so the API returns a clear message instead of a raw 500
 // when Clerk credentials have not been configured yet.
 const clerkConfigGuard = (_req: Request, res: Response, next: NextFunction) => {
@@ -213,8 +244,8 @@ app.post('/api/analyze', authenticate, async (req: Request, res: Response) => {
       Output ONLY valid JSON and nothing else. No markdown formatting.
     `;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+    const response = await generateWithRetry(ai, {
+      model: 'gemini-3.6-flash',
       contents: [
         {
           role: 'user',
@@ -298,8 +329,8 @@ app.post('/api/chat', authenticate, async (req: Request, res: Response) => {
       parts: [{ text: m.text }]
     }));
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+    const response = await generateWithRetry(ai, {
+      model: 'gemini-3.6-flash',
       contents: contents,
       config: {
         systemInstruction: systemInstruction
